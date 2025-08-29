@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Creative Production Tools</title>
+    <!-- Google Fonts Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- You can reuse your favicon.png file for this project too -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        /* --- Base Dark Theme Styling (From previous project) --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #64b5f6;
+            text-align: center;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            margin-bottom: 30px;
+        }
+
+        .page-container {
+            width: 95%;
+            max-width: 800px;
+        }
+
+        /* --- NEW: Collapsible Category Styling --- */
+        .collapsible {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: 1px solid #333;
+            border-radius: 8px;
+            text-align: left;
+            outline: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+            position: relative; /* For the plus/minus icon */
+        }
+        .collapsible:hover, .collapsible.active {
+            background-color: #2a2a2a;
+        }
+        /* The plus/minus icon */
+        .collapsible::after {
+            content: '+';
+            font-size: 1.5em;
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+        .collapsible.active::after {
+            content: "−"; /* A proper minus sign */
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            background-color: transparent;
+            transition: max-height 0.3s ease-out;
+        }
+        .content ul {
+            list-style-type: none;
+            padding: 15px 0 0 0;
+            margin: 0;
+        }
+
+        /* --- Tool Card Styling (Similar to festival-card) --- */
+        .tool-card {
+            background-color: #252525; /* Slightly different color to stand out */
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            background-color: #333;
+        }
+        .tool-link {
+            display: block;
+            text-decoration: none;
+            padding: 20px;
+        }
+        .tool-link h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.4em;
+            color: #8ab4f8;
+        }
+        .tool-link p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #b0b0b0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <h1>Creative Production Tools</h1>
+
+        <!-- CATEGORY: Music -->
+        <button type="button" class="collapsible">Music</button>
+        <div class="content">
+            <ul>
+                <li class="tool-card">
+                    <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>Incompetech</h2>
+                        <p>High-quality royalty-free music by Kevin MacLeod. A classic resource for creators.</p>
+                    </a>
+                </li>
+                <li class="tool-card">
+                    <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>YouTube Audio Library</h2>
+                        <p>A large, free library of music and sound effects provided directly by YouTube for use in your videos.</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CATEGORY: Sounds -->
+        <button type="button" class="collapsible">Sounds</button>
+        <div class="content">
+            <ul>
+                <li class="tool-card">
+                    <a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>Freesound.org</h2>
+                        <p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- To add a new category, just copy the button and div from above! -->
+
+    </div>
+
+    <script>
+        // Find all collapsible buttons
+        const collapsibles = document.querySelectorAll(".collapsible");
+
+        collapsibles.forEach(button => {
+            button.addEventListener("click", function() {
+                // Toggle the 'active' class on the button
+                this.classList.toggle("active");
+
+                // Get the content panel that is the next element
+                const content = this.nextElementSibling;
+
+                // If the panel is open, close it. If it's closed, open it.
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    // Set max-height to the actual height of the content
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        });
+    </script>
+
+</body>
+</html>

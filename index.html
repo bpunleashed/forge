@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Creative Production Tools</title>
+    <title>The Forge - Creative Tools</title>
     <!-- Google Fonts Link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- You can reuse your favicon.png file for this project too -->
+    <!-- Make sure to upload favicon.png and logo-white.png to this project's repository -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        /* --- Base Dark Theme Styling (From previous project) --- */
+        /* --- Base Dark Theme Styling --- */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #121212;
@@ -23,19 +23,46 @@
             align-items: center;
         }
 
+        /* --- Fluid Title Container Styling (From festivals page) --- */
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 95%;
+            gap: clamp(10px, 2.5vw, 20px);
+            margin-bottom: 30px;
+        }
+        .logo-img {
+            height: clamp(40px, 6vw, 60px);
+            width: auto;
+            flex-shrink: 0;
+        }
         h1 {
             color: #64b5f6;
             text-align: center;
+            margin: 0;
             font-size: clamp(1.5em, 5vw, 2.5em);
-            margin-bottom: 30px;
+            line-height: 1.2;
         }
 
         .page-container {
             width: 95%;
-            max-width: 800px;
+            max-width: 1200px; /* Increased max-width for two columns */
         }
 
-        /* --- NEW: Collapsible Category Styling --- */
+        /* --- NEW: Two-Column Grid for Categories --- */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
+            gap: 20px; /* Space between the columns and rows */
+        }
+
+        /* A structural block to hold each category */
+        .category-block {
+            break-inside: avoid; /* Helps prevent columns from breaking weirdly */
+        }
+
+        /* --- Collapsible Category Styling --- */
         .collapsible {
             background-color: #1e1e1e;
             color: #e0e0e0;
@@ -48,14 +75,12 @@
             outline: none;
             font-size: 1.2em;
             font-weight: bold;
-            margin-top: 10px;
             transition: background-color 0.2s;
-            position: relative; /* For the plus/minus icon */
+            position: relative;
         }
         .collapsible:hover, .collapsible.active {
             background-color: #2a2a2a;
         }
-        /* The plus/minus icon */
         .collapsible::after {
             content: '+';
             font-size: 1.5em;
@@ -67,7 +92,7 @@
             transition: transform 0.3s ease;
         }
         .collapsible.active::after {
-            content: "−"; /* A proper minus sign */
+            content: "−";
             transform: translateY(-50%) rotate(180deg);
         }
 
@@ -84,9 +109,9 @@
             margin: 0;
         }
 
-        /* --- Tool Card Styling (Similar to festival-card) --- */
+        /* --- Tool Card Styling --- */
         .tool-card {
-            background-color: #252525; /* Slightly different color to stand out */
+            background-color: #252525;
             margin-bottom: 15px;
             border-radius: 8px;
             border: 1px solid #444;
@@ -112,66 +137,78 @@
             color: #b0b0b0;
             line-height: 1.5;
         }
+
+        /* --- NEW: Media Query for Responsiveness --- */
+        @media (max-width: 768px) {
+            /* On screens 768px or less, stack the grid into a single column */
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <div class="title-container">
+        <img src="logo-white.png" alt="Logo" class="logo-img">
+        <h1>The Forge - Creative Tools</h1>
+        <img src="logo-white.png" alt="Logo" class="logo-img">
+    </div>
+
     <div class="page-container">
-        <h1>Creative Production Tools</h1>
+        <div class="categories-grid">
 
-        <!-- CATEGORY: Music -->
-        <button type="button" class="collapsible">Music</button>
-        <div class="content">
-            <ul>
-                <li class="tool-card">
-                    <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
-                        <h2>Incompetech</h2>
-                        <p>High-quality royalty-free music by Kevin MacLeod. A classic resource for creators.</p>
-                    </a>
-                </li>
-                <li class="tool-card">
-                    <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                        <h2>YouTube Audio Library</h2>
-                        <p>A large, free library of music and sound effects provided directly by YouTube for use in your videos.</p>
-                    </a>
-                </li>
-            </ul>
+            <!-- CATEGORY BLOCK 1: Music -->
+            <div class="category-block">
+                <button type="button" class="collapsible">Music</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card">
+                            <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Incompetech</h2>
+                                <p>High-quality royalty-free music by Kevin MacLeod. A classic resource for creators.</p>
+                            </a>
+                        </li>
+                        <li class="tool-card">
+                            <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>YouTube Audio Library</h2>
+                                <p>A large, free library of music and sound effects provided directly by YouTube for use in your videos.</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CATEGORY BLOCK 2: Sounds -->
+            <div class="category-block">
+                <button type="button" class="collapsible">Sounds</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card">
+                            <a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Freesound.org</h2>
+                                <p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- To add a new category, copy a whole <div class="category-block">...</div> -->
+
         </div>
-
-        <!-- CATEGORY: Sounds -->
-        <button type="button" class="collapsible">Sounds</button>
-        <div class="content">
-            <ul>
-                <li class="tool-card">
-                    <a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                        <h2>Freesound.org</h2>
-                        <p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- To add a new category, just copy the button and div from above! -->
-
     </div>
 
     <script>
-        // Find all collapsible buttons
         const collapsibles = document.querySelectorAll(".collapsible");
 
         collapsibles.forEach(button => {
             button.addEventListener("click", function() {
-                // Toggle the 'active' class on the button
                 this.classList.toggle("active");
-
-                // Get the content panel that is the next element
-                const content = this.nextElementSibling;
-
-                // If the panel is open, close it. If it's closed, open it.
+                const content = this.nextElementSibling; // This still works because it's the next element inside the .category-block
                 if (content.style.maxHeight) {
                     content.style.maxHeight = null;
                 } else {
-                    // Set max-height to the actual height of the content
                     content.style.maxHeight = content.scrollHeight + "px";
                 } 
             });

@@ -30,7 +30,7 @@
             justify-content: center;
             width: 95%;
             gap: clamp(10px, 2.5vw, 20px);
-            margin-bottom: 30px;
+            margin-bottom: 15px; /* Adjusted margin for disclaimer */
         }
         .logo-img {
             height: clamp(40px, 6vw, 60px);
@@ -45,16 +45,26 @@
             line-height: 1.2;
         }
 
+        /* --- NEW: Disclaimer Text Styling --- */
+        .disclaimer {
+            text-align: center;
+            font-style: italic;
+            color: #aaa;
+            max-width: 700px; /* Adjusted width */
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
         .page-container {
             width: 95%;
-            max-width: 1200px; /* Wider for two columns */
+            max-width: 1200px;
         }
         
-        /* --- NEW: Two-Column Layout --- */
+        /* --- Two-Column Layout --- */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Two equal columns */
-            gap: 25px; /* Space between columns */
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
         }
         .column-title {
             font-size: 1.8em;
@@ -145,7 +155,7 @@
         /* --- Media Query for Responsiveness --- */
         @media (max-width: 800px) {
             .main-grid {
-                grid-template-columns: 1fr; /* Stack to a single column */
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -157,6 +167,9 @@
         <h1>The Forge - Creative Tools</h1>
         <img src="logo-white.png" alt="Logo" class="logo-img">
     </div>
+
+    <!-- NEW: Disclaimer Paragraph -->
+    <p class="disclaimer">This are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
 
     <div class="page-container">
         <div class="main-grid">

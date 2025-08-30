@@ -23,7 +23,7 @@
             align-items: center;
         }
 
-        /* --- Fluid Title Container Styling (From festivals page) --- */
+        /* --- Fluid Title Container Styling --- */
         .title-container {
             display: flex;
             align-items: center;
@@ -47,20 +47,9 @@
 
         .page-container {
             width: 95%;
-            max-width: 1200px;
+            max-width: 900px; /* Adjusted width for a single-column layout */
         }
-
-        /* --- Two-Column Grid for Categories --- */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .category-block {
-            break-inside: avoid;
-        }
-
+        
         /* --- Collapsible Category Styling --- */
         .collapsible {
             background-color: #1e1e1e;
@@ -72,10 +61,16 @@
             border-radius: 8px;
             text-align: left;
             outline: none;
-            font-size: 1.2em;
+            font-size: 1.3em; /* Slightly larger for main categories */
             font-weight: bold;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, border-radius 0.3s;
             position: relative;
+            margin-top: 15px;
+        }
+        /* Make corners square when open for a cleaner look */
+        .collapsible.active {
+             border-bottom-left-radius: 0;
+             border-bottom-right-radius: 0;
         }
         .collapsible:hover, .collapsible.active {
             background-color: #2a2a2a;
@@ -96,21 +91,43 @@
         }
 
         .content {
-            padding: 0 18px;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            background-color: transparent;
+            background-color: #1e1e1e;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
             transition: max-height 0.3s ease-out;
         }
         .content ul {
             list-style-type: none;
-            padding: 15px 0 0 0;
+            padding: 15px 18px 5px 18px;
             margin: 0;
+        }
+        
+        /* --- NEW: Nested Sub-category Styling --- */
+        .sub-collapsible {
+            font-size: 1.1em; /* Smaller font for sub-categories */
+            background-color: #252525;
+            border: 1px solid #444;
+            margin: 0 18px 10px 18px;
+            width: auto; /* Let the container handle the width */
+        }
+        .sub-collapsible.active {
+             border-bottom-left-radius: 8px;
+             border-bottom-right-radius: 8px;
+        }
+        .sub-content {
+            background-color: #252525; /* Match the sub-button color */
+            margin: 0 18px;
         }
 
         /* --- Tool Card Styling --- */
         .tool-card {
-            background-color: #252525;
+            background-color: #2c2c2c; /* Slightly different color */
             margin-bottom: 15px;
             border-radius: 8px;
             border: 1px solid #444;
@@ -118,7 +135,7 @@
         }
         .tool-card:hover {
             transform: translateY(-4px);
-            background-color: #333;
+            background-color: #383838;
         }
         .tool-link {
             display: block;
@@ -136,13 +153,6 @@
             color: #b0b0b0;
             line-height: 1.5;
         }
-
-        /* --- Media Query for Responsiveness --- */
-        @media (max-width: 768px) {
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
@@ -154,95 +164,73 @@
     </div>
 
     <div class="page-container">
-        <div class="categories-grid">
 
-            <!-- CATEGORY BLOCK 1: Music -->
-            <div class="category-block">
-                <button type="button" class="collapsible">Music</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card">
-                            <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Incompetech</h2>
-                                <p>High-quality royalty-free music by Kevin MacLeod. A classic resource for creators.</p>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>YouTube Audio Library</h2>
-                                <p>A large, free library of music and sound effects provided directly by YouTube for use in your videos.</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- CATEGORY BLOCK 2: Sounds -->
-            <div class="category-block">
-                <button type="button" class="collapsible">Sounds</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card">
-                            <a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Freesound.org</h2>
-                                <p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>SoundBible</h2>
-                                <p>Thousands of free sound effects, sound clips, and sound bites for creative projects, updated twice a week.</p>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Free Sound Effects</h2>
-                                <p>A straightforward library of sound effects for various uses, from nature to interface sounds.</p>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Sample Focus</h2>
-                                <p>A curated library of royalty-free audio samples, perfect for music producers and sound designers.</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- CATEGORY BLOCK 3: Music Production -->
-            <div class="category-block">
-                <button type="button" class="collapsible">Music Production</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card">
-                            <a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Online Sequencer</h2>
-                                <p>A free and simple in-browser music sequencer for creating melodies and beats without any software.</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- CATEGORY BLOCK 4: Design -->
-            <div class="category-block">
-                <button type="button" class="collapsible">Design</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card">
-                            <a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Coolors</h2>
-                                <p>A powerful and fast color palette generator. Perfect for finding color schemes for any design project.</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <!-- MAIN CATEGORY 1: Tools -->
+        <button type="button" class="collapsible">Tools</button>
+        <div class="content">
             
-            <!-- To add a new category, copy a whole <div class="category-block">...</div> -->
+            <!-- SUB-CATEGORY: Music -->
+            <button type="button" class="collapsible sub-collapsible">Music</button>
+            <div class="content sub-content">
+                <ul>
+                    <li class="tool-card"><a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Incompetech</h2><p>High-quality royalty-free music by Kevin MacLeod. A classic resource for creators.</p></a></li>
+                    <li class="tool-card"><a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>YouTube Audio Library</h2><p>A large, free library of music and sound effects provided directly by YouTube for use in your videos.</p></a></li>
+                </ul>
+            </div>
 
+            <!-- SUB-CATEGORY: Sounds -->
+            <button type="button" class="collapsible sub-collapsible">Sounds</button>
+            <div class="content sub-content">
+                 <ul>
+                    <li class="tool-card"><a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Freesound.org</h2><p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p></a></li>
+                    <li class="tool-card"><a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>SoundBible</h2><p>Thousands of free sound effects, sound clips, and sound bites for creative projects, updated twice a week.</p></a></li>
+                    <li class="tool-card"><a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Free Sound Effects</h2><p>A straightforward library of sound effects for various uses, from nature to interface sounds.</p></a></li>
+                    <li class="tool-card"><a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sample Focus</h2><p>A curated library of royalty-free audio samples, perfect for music producers and sound designers.</p></a></li>
+                </ul>
+            </div>
+
+            <!-- SUB-CATEGORY: Music Production -->
+            <button type="button" class="collapsible sub-collapsible">Music Production</button>
+            <div class="content sub-content">
+                <ul>
+                    <li class="tool-card"><a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Sequencer</h2><p>A free and simple in-browser music sequencer for creating melodies and beats without any software.</p></a></li>
+                </ul>
+            </div>
+
+            <!-- SUB-CATEGORY: Design -->
+            <button type="button" class="collapsible sub-collapsible">Design</button>
+            <div class="content sub-content">
+                <ul>
+                    <li class="tool-card"><a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Coolors</h2><p>A powerful and fast color palette generator. Perfect for finding color schemes for any design project.</p></a></li>
+                </ul>
+            </div>
         </div>
+
+        <!-- MAIN CATEGORY 2: Manuals -->
+        <button type="button" class="collapsible">Manuals to my gear</button>
+        <div class="content">
+            <ul>
+                <li class="tool-card">
+                    <a href="https://eww.pavc.panasonic.co.jp/hdw/oi/WX970/HC-WX970_VX870_V770_V760_EE_SQW0254_rus.pdf" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>Panasonic HC-V760/V770 Manual</h2>
+                        <p>Official user manual for the Panasonic HC-V770 series camcorders. (PDF)</p>
+                    </a>
+                </li>
+                <li class="tool-card">
+                    <a href="https://static.bhphotovideo.com/lit_files/63886.pdf" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>Rode VideoMic Pro Manual</h2>
+                        <p>Official user manual for the Rode VideoMic Pro on-camera shotgun microphone. (PDF)</p>
+                    </a>
+                </li>
+                <li class="tool-card">
+                    <a href="https://rode.com/en/products/videomic-pro#module_8" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>Rode VideoMic Pro Support</h2>
+                        <p>The official product page with additional resources, specifications, and support for the VideoMic Pro.</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
     <script>
@@ -252,11 +240,25 @@
             button.addEventListener("click", function() {
                 this.classList.toggle("active");
                 const content = this.nextElementSibling;
+
+                // Toggle the direct content panel
                 if (content.style.maxHeight) {
                     content.style.maxHeight = null;
                 } else {
                     content.style.maxHeight = content.scrollHeight + "px";
-                } 
+                }
+
+                // --- NEW: Adjust parent panel height if this is nested ---
+                // Find the closest parent that is a content panel
+                let parentContent = this.closest('.content');
+                
+                // Keep resizing parents up the chain
+                while(parentContent) {
+                    // Recalculate the maxHeight to fit the new content
+                    parentContent.style.maxHeight = parentContent.scrollHeight + "px";
+                    // Move up to the next parent
+                    parentContent = parentContent.parentElement.closest('.content');
+                }
             });
         });
     </script>

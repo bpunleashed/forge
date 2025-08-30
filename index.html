@@ -63,6 +63,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
+            align-items: start; /* Align columns to the top */
         }
         .column-title {
             font-size: 1.8em;
@@ -142,13 +143,12 @@
             color: #8ab4f8;
         }
         .tool-link p {
-            margin: 0 0 15px 0; /* Added margin-bottom to make space for tags */
+            margin: 0 0 15px 0;
             font-size: 0.95em;
             color: #b0b0b0;
             line-height: 1.5;
         }
 
-        /* --- NEW: Tags Styling --- */
         .tags-container {
             display: flex;
             gap: 8px;
@@ -161,12 +161,10 @@
             font-size: 0.8em;
             font-weight: bold;
         }
-        /* Color coding for tags */
-        .tag.websource { background-color: #006064; } /* Cyan */
-        .tag.program   { background-color: #e65100; } /* Orange */
-        .tag.manual    { background-color: #4a148c; } /* Purple */
+        .tag.websource { background-color: #006064; }
+        .tag.program   { background-color: #e65100; }
+        .tag.manual    { background-color: #4a148c; }
 
-        /* --- Media Query for Responsiveness --- */
         @media (max-width: 800px) {
             .main-grid {
                 grid-template-columns: 1fr;
@@ -206,6 +204,7 @@
                         <li class="tool-card"><a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>SoundBible</h2><p>Thousands of free sound effects, sound clips, and sound bites.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                         <li class="tool-card"><a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Free Sound Effects</h2><p>A straightforward library of sound effects for various uses.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                         <li class="tool-card"><a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sample Focus</h2><p>A curated library of royalty-free audio samples.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://soundparticles.com/products/explorer" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sound Particles Explorer</h2><p>A free, powerful sound effects library manager for your local audio files.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
                     </ul>
                 </div>
 
@@ -220,6 +219,23 @@
                 <div class="content">
                     <ul>
                         <li class="tool-card"><a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Coolors</h2><p>A powerful and fast color palette generator.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                    </ul>
+                </div>
+                
+                <button type="button" class="collapsible">Stop Motion</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card"><a href="https://www.qstopmotion.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>qStopMotion</h2><p>A free, open-source application for creating stop-motion animations.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
+                        <li class="tool-card"><a href="https://www.charlielee.uk/boats-animator/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Boats Animator</h2><p>A simple and free stop-motion animation program, great for beginners.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
+                        <li class="tool-card"><a href="https://iriun.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Iriun Webcam</h2><p>Software to use your phone's high-quality camera as a wireless webcam for your PC.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Converters - Downloaders</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card"><a href="https://online-audio-converter.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Audio Converter</h2><p>A versatile websource for converting audio files between many formats.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://getvideo.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>GetVideo.org</h2><p>A web-based tool for downloading videos from YouTube and other sites.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                     </ul>
                 </div>
             </div>
@@ -238,7 +254,6 @@
     </div>
 
     <script>
-        // Simplified script for single-level collapsibles
         const collapsibles = document.querySelectorAll(".collapsible");
 
         collapsibles.forEach(button => {

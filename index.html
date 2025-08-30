@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>The Forge</title>
+    <title>The Forge - Creative Tools</title>
     <!-- Google Fonts Link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,19 +47,18 @@
 
         .page-container {
             width: 95%;
-            max-width: 1200px; /* Increased max-width for two columns */
+            max-width: 1200px;
         }
 
-        /* --- NEW: Two-Column Grid for Categories --- */
+        /* --- Two-Column Grid for Categories --- */
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
-            gap: 20px; /* Space between the columns and rows */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        /* A structural block to hold each category */
         .category-block {
-            break-inside: avoid; /* Helps prevent columns from breaking weirdly */
+            break-inside: avoid;
         }
 
         /* --- Collapsible Category Styling --- */
@@ -138,9 +137,8 @@
             line-height: 1.5;
         }
 
-        /* --- NEW: Media Query for Responsiveness --- */
+        /* --- Media Query for Responsiveness --- */
         @media (max-width: 768px) {
-            /* On screens 768px or less, stack the grid into a single column */
             .categories-grid {
                 grid-template-columns: 1fr;
             }
@@ -154,9 +152,6 @@
         <h1>The Forge - Creative Tools</h1>
         <img src="logo-white.png" alt="Logo" class="logo-img">
     </div>
-
-  <!-- The new disclaimer paragraph -->
-    <p class="disclaimer">Information about festivals listed on this page could be old and unupdated, so I recommend you check each one by yourself.</p>
 
     <div class="page-container">
         <div class="categories-grid">
@@ -193,6 +188,54 @@
                                 <p>A massive collaborative database of audio snippets, samples, and recordings released under Creative Commons licenses.</p>
                             </a>
                         </li>
+                        <li class="tool-card">
+                            <a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>SoundBible</h2>
+                                <p>Thousands of free sound effects, sound clips, and sound bites for creative projects, updated twice a week.</p>
+                            </a>
+                        </li>
+                        <li class="tool-card">
+                            <a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Free Sound Effects</h2>
+                                <p>A straightforward library of sound effects for various uses, from nature to interface sounds.</p>
+                            </a>
+                        </li>
+                        <li class="tool-card">
+                            <a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Sample Focus</h2>
+                                <p>A curated library of royalty-free audio samples, perfect for music producers and sound designers.</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CATEGORY BLOCK 3: Music Production -->
+            <div class="category-block">
+                <button type="button" class="collapsible">Music Production</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card">
+                            <a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Online Sequencer</h2>
+                                <p>A free and simple in-browser music sequencer for creating melodies and beats without any software.</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CATEGORY BLOCK 4: Design -->
+            <div class="category-block">
+                <button type="button" class="collapsible">Design</button>
+                <div class="content">
+                    <ul>
+                        <li class="tool-card">
+                            <a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Coolors</h2>
+                                <p>A powerful and fast color palette generator. Perfect for finding color schemes for any design project.</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -208,7 +251,7 @@
         collapsibles.forEach(button => {
             button.addEventListener("click", function() {
                 this.classList.toggle("active");
-                const content = this.nextElementSibling; // This still works because it's the next element inside the .category-block
+                const content = this.nextElementSibling;
                 if (content.style.maxHeight) {
                     content.style.maxHeight = null;
                 } else {
@@ -220,5 +263,3 @@
 
 </body>
 </html>
-
-

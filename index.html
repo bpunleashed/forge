@@ -30,7 +30,7 @@
             justify-content: center;
             width: 95%;
             gap: clamp(10px, 2.5vw, 20px);
-            margin-bottom: 15px; /* Adjusted margin for disclaimer */
+            margin-bottom: 15px;
         }
         .logo-img {
             height: clamp(40px, 6vw, 60px);
@@ -45,12 +45,11 @@
             line-height: 1.2;
         }
 
-        /* --- NEW: Disclaimer Text Styling --- */
         .disclaimer {
             text-align: center;
             font-style: italic;
             color: #aaa;
-            max-width: 700px; /* Adjusted width */
+            max-width: 700px;
             margin-bottom: 30px;
             line-height: 1.6;
         }
@@ -60,7 +59,6 @@
             max-width: 1200px;
         }
         
-        /* --- Two-Column Layout --- */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -75,7 +73,6 @@
             border-bottom: 2px solid #333;
         }
 
-        /* --- Collapsible Category Styling --- */
         .collapsible {
             background-color: #1e1e1e;
             color: #e0e0e0;
@@ -123,7 +120,6 @@
             margin: 0;
         }
 
-        /* --- Tool Card Styling --- */
         .tool-card {
             background-color: #252525;
             margin-bottom: 15px;
@@ -146,11 +142,29 @@
             color: #8ab4f8;
         }
         .tool-link p {
-            margin: 0;
+            margin: 0 0 15px 0; /* Added margin-bottom to make space for tags */
             font-size: 0.95em;
             color: #b0b0b0;
             line-height: 1.5;
         }
+
+        /* --- NEW: Tags Styling --- */
+        .tags-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        /* Color coding for tags */
+        .tag.websource { background-color: #006064; } /* Cyan */
+        .tag.program   { background-color: #e65100; } /* Orange */
+        .tag.manual    { background-color: #4a148c; } /* Purple */
 
         /* --- Media Query for Responsiveness --- */
         @media (max-width: 800px) {
@@ -168,7 +182,6 @@
         <img src="logo-white.png" alt="Logo" class="logo-img">
     </div>
 
-    <!-- NEW: Disclaimer Paragraph -->
     <p class="disclaimer">This are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
 
     <div class="page-container">
@@ -178,39 +191,35 @@
             <div class="column">
                 <h2 class="column-title">Tools</h2>
 
-                <!-- Collapsible: Music -->
                 <button type="button" class="collapsible">Music</button>
                 <div class="content">
                     <ul>
-                        <li class="tool-card"><a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Incompetech</h2><p>High-quality royalty-free music by Kevin MacLeod.</p></a></li>
-                        <li class="tool-card"><a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>YouTube Audio Library</h2><p>A large, free library of music and sound effects from YouTube.</p></a></li>
+                        <li class="tool-card"><a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Incompetech</h2><p>High-quality royalty-free music by Kevin MacLeod.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>YouTube Audio Library</h2><p>A large, free library of music and sound effects from YouTube.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                     </ul>
                 </div>
 
-                <!-- Collapsible: Sounds -->
                 <button type="button" class="collapsible">Sounds</button>
                 <div class="content">
                     <ul>
-                        <li class="tool-card"><a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Freesound.org</h2><p>A massive collaborative database of audio snippets and samples.</p></a></li>
-                        <li class="tool-card"><a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>SoundBible</h2><p>Thousands of free sound effects, sound clips, and sound bites.</p></a></li>
-                        <li class="tool-card"><a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Free Sound Effects</h2><p>A straightforward library of sound effects for various uses.</p></a></li>
-                        <li class="tool-card"><a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sample Focus</h2><p>A curated library of royalty-free audio samples.</p></a></li>
+                        <li class="tool-card"><a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Freesound.org</h2><p>A massive collaborative database of audio snippets and samples.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>SoundBible</h2><p>Thousands of free sound effects, sound clips, and sound bites.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Free Sound Effects</h2><p>A straightforward library of sound effects for various uses.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card"><a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sample Focus</h2><p>A curated library of royalty-free audio samples.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                     </ul>
                 </div>
 
-                <!-- Collapsible: Music Production -->
                 <button type="button" class="collapsible">Music Production</button>
                 <div class="content">
                     <ul>
-                        <li class="tool-card"><a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Sequencer</h2><p>A free in-browser music sequencer for creating melodies.</p></a></li>
+                        <li class="tool-card"><a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Sequencer</h2><p>A free in-browser music sequencer for creating melodies.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                     </ul>
                 </div>
 
-                <!-- Collapsible: Design -->
                 <button type="button" class="collapsible">Design</button>
                 <div class="content">
                     <ul>
-                        <li class="tool-card"><a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Coolors</h2><p>A powerful and fast color palette generator.</p></a></li>
+                        <li class="tool-card"><a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Coolors</h2><p>A powerful and fast color palette generator.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
                     </ul>
                 </div>
             </div>
@@ -219,9 +228,9 @@
             <div class="column">
                 <h2 class="column-title">Manuals to my gear</h2>
                 <ul class="manuals-list">
-                    <li class="tool-card"><a href="https://eww.pavc.panasonic.co.jp/hdw/oi/WX970/HC-WX970_VX870_V770_V760_EE_SQW0254_rus.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Panasonic HC-V760/V770</h2><p>Official user manual for the Panasonic HC-V770 series camcorders. (PDF)</p></a></li>
-                    <li class="tool-card"><a href="https://static.bhphotovideo.com/lit_files/63886.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro</h2><p>Official user manual for the Rode VideoMic Pro microphone. (PDF)</p></a></li>
-                    <li class="tool-card"><a href="https://rode.com/en/products/videomic-pro#module_8" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro Support</h2><p>The official product page with additional resources and support.</p></a></li>
+                    <li class="tool-card"><a href="https://eww.pavc.panasonic.co.jp/hdw/oi/WX970/HC-WX970_VX870_V770_V760_EE_SQW0254_rus.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Panasonic HC-V760/V770</h2><p>Official user manual for the Panasonic HC-V770 series camcorders. (PDF)</p><div class="tags-container"><span class="tag manual">Manual</span></div></a></li>
+                    <li class="tool-card"><a href="https://static.bhphotovideo.com/lit_files/63886.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro</h2><p>Official user manual for the Rode VideoMic Pro microphone. (PDF)</p><div class="tags-container"><span class="tag manual">Manual</span></div></a></li>
+                    <li class="tool-card"><a href="https://rode.com/en/products/videomic-pro#module_8" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro Support</h2><p>The official product page with additional resources and support.</p><div class="tags-container"><span class="tag manual">Manual</span><span class="tag websource">Websource</span></div></a></li>
                 </ul>
             </div>
 

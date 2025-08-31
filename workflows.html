@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workflows - The Forge</title>
+    <!-- Reusing the same head content for consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        /* Reusing the same core styles */
+        body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
+        .title-container { display: flex; align-items: center; justify-content: center; width: 95%; gap: clamp(10px, 2.5vw, 20px); margin-bottom: 15px; }
+        .logo-img { height: clamp(40px, 6vw, 60px); width: auto; flex-shrink: 0; }
+        h1 { color: #64b5f6; text-align: center; margin: 0; font-size: clamp(1.5em, 5vw, 2.5em); line-height: 1.2; }
+        nav { width: 100%; max-width: 1200px; text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        nav a { color: #b0b0b0; text-decoration: none; font-weight: bold; padding: 10px 15px; margin: 0 5px; border-radius: 6px; transition: background-color 0.2s, color 0.2s; }
+        nav a:hover { background-color: #2a2a2a; color: #fff; }
+        nav a.active { color: #fff; background-color: #007bff; }
+        .page-container { width: 95%; max-width: 900px; }
+
+        /* --- NEW: Workflow-Specific Styling --- */
+        .workflow-block {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .workflow-block h2 {
+            margin-top: 0;
+            color: #8ab4f8; /* Workflow title color */
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows wrapping on small screens */
+            gap: 15px;
+        }
+        .step {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 15px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .arrow {
+            font-size: 2em;
+            color: #aaa;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <img src="logo-white.png" alt="Logo" class="logo-img">
+        <h1>The Forge - Creative Tools</h1>
+        <img src="logo-white.png" alt="Logo" class="logo-img">
+    </div>
+
+    <!-- Navigation Menu - 'active' class is now on Workflows -->
+    <nav>
+        <a href="index.html">Tools & Manuals</a>
+        <a href="workflows.html" class="active">Workflows</a>
+    </nav>
+
+    <div class="page-container">
+        
+        <!-- WORKFLOW 1 -->
+        <div class="workflow-block">
+            <h2>Basic Photoshoot</h2>
+            <div class="workflow">
+                <div class="step">Photoshoot</div>
+                <div class="arrow">→</div>
+                <div class="step">RawTherapee</div>
+                <div class="arrow">→</div>
+                <div class="step">Google Drive</div>
+            </div>
+        </div>
+
+        <!-- WORKFLOW 2 -->
+        <div class="workflow-block">
+            <h2>YouTube Video Production</h2>
+            <div class="workflow">
+                <div class="step">Filming</div>
+                <div class="arrow">→</div>
+                <div class="step">Audacity (Audio)</div>
+                <div class="arrow">→</div>
+                <div class="step">Video Editor</div>
+                <div class="arrow">→</div>
+                <div class="step">HandBrake (Compress)</div>
+                <div class="arrow">→</div>
+                <div class="step">YouTube</div>
+            </div>
+        </div>
+
+        <!-- To add a new workflow, just copy a whole <div class="workflow-block">...</div> -->
+
+    </div>
+
+</body>
+</html>

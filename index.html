@@ -45,6 +45,33 @@
             line-height: 1.2;
         }
 
+        /* --- NEW: Navigation Menu Styling --- */
+        nav {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        nav a:hover {
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+        nav a.active { /* Style for the current page */
+            color: #fff;
+            background-color: #007bff;
+        }
+
         .disclaimer {
             text-align: center;
             font-style: italic;
@@ -180,6 +207,12 @@
         <img src="logo-white.png" alt="Logo" class="logo-img">
     </div>
 
+    <!-- NEW: Navigation Menu -->
+    <nav>
+        <a href="index.html" class="active">Tools & Manuals</a>
+        <a href="workflows.html">Workflows</a>
+    </nav>
+
     <p class="disclaimer">This are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
 
     <div class="page-container">
@@ -311,3 +344,4 @@
 
 </body>
 </html>
+

@@ -181,6 +181,20 @@
             gap: 8px;
             flex-wrap: wrap;
         }
+        /* --- NEW: License Info Box Styling --- */
+        .license-info {
+            background-color: #3a3a3a; /* A slightly lighter grey to stand out */
+            border-left: 4px solid #f5b041; /* An amber accent color for attention */
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-top: 15px; /* Space between tags and this box */
+            font-size: 0.9em;
+            color: #d0d0d0;
+        }
+        .license-info strong {
+            color: #f5b041; /* Match the accent color */
+        }
+        
         .tag {
             color: #fff;
             padding: 4px 10px;
@@ -221,12 +235,45 @@
             <div class="column">
                 <h2 class="column-title">Tools</h2>
 
-                <button type="button" class="collapsible">Music</button>
+                              <button type="button" class="collapsible">Music</button>
                 <div class="content">
                     <ul>
-                        <li class="tool-card"><a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Incompetech</h2><p>High-quality royalty-free music by Kevin MacLeod.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>YouTube Audio Library</h2><p>A large, free library of music and sound effects from YouTube.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://uppbeat.io/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Uppbeat</h2><p>A large library of free, curated music for creators with no copyright claims.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
+                        <li class="tool-card">
+                            <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Incompetech</h2>
+                                <p>High-quality royalty-free music by Kevin MacLeod.</p>
+                                <div class="tags-container">
+                                    <span class="tag websource">Websource</span>
+                                </div>
+                                <div class="license-info">
+                                    <strong>License:</strong> Requires attribution. You must credit the artist in your project.
+                                </div>
+                            </a>
+                        </li>
+                        <li class="tool-card">
+                            <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>YouTube Audio Library</h2>
+                                <p>A large, free library of music and sound effects from YouTube.</p>
+                                <div class="tags-container">
+                                    <span class="tag websource">Websource</span>
+                                </div>
+                                <div class="license-info">
+                                    <strong>License:</strong> Varies. Check each track; some are completely free, others require attribution.
+                                </div>
+                            </a>
+                        </li>
+                        <li class="tool-card">
+                            <a href="https://uppbeat.io/" target="_blank" rel="noopener noreferrer" class="tool-link">
+                                <h2>Uppbeat</h2>
+                                <p>A large library of free, curated music for creators with no copyright claims.</p>
+                                <div class="tags-container">
+                                    <span class="tag websource">Websource</span>
+                                </div>
+                                <div class="license-info">
+                                    <strong>License:</strong> Free with attribution. Provides a specific credit to copy and paste for your description.
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -376,3 +423,4 @@
 
 </body>
 </html>
+

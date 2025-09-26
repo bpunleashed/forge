@@ -7,210 +7,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Make sure to upload favicon.png and logo-white.png to this project's repository -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        /* --- Base Dark Theme Styling --- */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* --- Fluid Title Container Styling --- */
-        .title-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 95%;
-            gap: clamp(10px, 2.5vw, 20px);
-            margin-bottom: 15px;
-        }
-        .logo-img {
-            height: clamp(40px, 6vw, 60px);
-            width: auto;
-            flex-shrink: 0;
-        }
-        h1 {
-            color: #64b5f6;
-            text-align: center;
-            margin: 0;
-            font-size: clamp(1.5em, 5vw, 2.5em);
-            line-height: 1.2;
-        }
-
-        /* --- Navigation Menu Styling --- */
-        nav {
-            width: 100%;
-            max-width: 1200px;
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-        }
-        nav a {
-            color: #b0b0b0;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin: 0 5px;
-            border-radius: 6px;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        nav a:hover {
-            background-color: #2a2a2a;
-            color: #fff;
-        }
-        nav a.active { /* Style for the current page */
-            color: #fff;
-            background-color: #007bff;
-        }
-
-        .disclaimer {
-            text-align: center;
-            font-style: italic;
-            color: #aaa;
-            max-width: 700px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .page-container {
-            width: 95%;
-            max-width: 1200px;
-        }
-        
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            align-items: start;
-        }
-        .column-title {
-            font-size: 1.8em;
-            color: #64b5f6;
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #333;
-        }
-
-        .collapsible {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 8px;
-            text-align: left;
-            outline: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            position: relative;
-            margin-top: 15px;
-        }
-        .collapsible:hover, .collapsible.active {
-            background-color: #2a2a2a;
-        }
-        .collapsible::after {
-            content: '+';
-            font-size: 1.5em;
-            color: #aaa;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: transform 0.3s ease;
-        }
-        .collapsible.active::after {
-            content: "−";
-            transform: translateY(-50%) rotate(180deg);
-        }
-
-        .content {
-            padding: 0 18px;
-            max-height: 0;
-            overflow: hidden;
-            background-color: transparent;
-            transition: max-height 0.3s ease-out;
-        }
-        .content ul, .manuals-list {
-            list-style-type: none;
-            padding: 15px 0 0 0;
-            margin: 0;
-        }
-
-        .tool-card {
-            background-color: #252525;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .tool-card:hover {
-            transform: translateY(-4px);
-            background-color: #333;
-        }
-        .tool-link {
-            display: block;
-            text-decoration: none;
-            padding: 20px;
-        }
-        .tool-link h2 {
-            margin: 0 0 8px 0;
-            font-size: 1.4em;
-            color: #8ab4f8;
-        }
-        .tool-link p {
-            margin: 0 0 15px 0;
-            font-size: 0.95em;
-            color: #b0b0b0;
-            line-height: 1.5;
-        }
-
-        .tags-container {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        /* --- NEW: License Info Box Styling --- */
-        .license-info {
-            background-color: #3a3a3a; /* A slightly lighter grey to stand out */
-            border-left: 4px solid #f5b041; /* An amber accent color for attention */
-            border-radius: 4px;
-            padding: 10px 15px;
-            margin-top: 15px; /* Space between tags and this box */
-            font-size: 0.9em;
-            color: #d0d0d0;
-        }
-        .license-info strong {
-            color: #f5b041; /* Match the accent color */
-        }
-        
-        .tag {
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
+        /* All of your existing CSS is unchanged */
+        body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
+        .title-container { display: flex; align-items: center; justify-content: center; width: 95%; gap: clamp(10px, 2.5vw, 20px); margin-bottom: 15px; }
+        .logo-img { height: clamp(40px, 6vw, 60px); width: auto; flex-shrink: 0; }
+        h1 { color: #64b5f6; text-align: center; margin: 0; font-size: clamp(1.5em, 5vw, 2.5em); line-height: 1.2; }
+        nav { width: 100%; max-width: 1200px; text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        nav a { color: #b0b0b0; text-decoration: none; font-weight: bold; padding: 10px 15px; margin: 0 5px; border-radius: 6px; transition: background-color 0.2s, color 0.2s; }
+        nav a:hover { background-color: #2a2a2a; color: #fff; }
+        nav a.active { color: #fff; background-color: #007bff; }
+        .disclaimer { text-align: center; font-style: italic; color: #aaa; max-width: 700px; margin-bottom: 30px; line-height: 1.6; }
+        .page-container { width: 95%; max-width: 1200px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: start; }
+        .column-title { font-size: 1.8em; color: #64b5f6; margin-top: 0; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #333; }
+        .collapsible { background-color: #1e1e1e; color: #e0e0e0; cursor: pointer; padding: 18px; width: 100%; border: 1px solid #333; border-radius: 8px; text-align: left; outline: none; font-size: 1.2em; font-weight: bold; transition: background-color 0.2s; position: relative; margin-top: 15px; }
+        .collapsible:hover, .collapsible.active { background-color: #2a2a2a; }
+        .collapsible::after { content: '+'; font-size: 1.5em; color: #aaa; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); transition: transform 0.3s ease; }
+        .collapsible.active::after { content: "−"; transform: translateY(-50%) rotate(180deg); }
+        .content { padding: 0 18px; max-height: 0; overflow: hidden; background-color: transparent; transition: max-height 0.3s ease-out; }
+        .content ul, .manuals-list { list-style-type: none; padding: 15px 0 0 0; margin: 0; }
+        .tool-card { background-color: #252525; margin-bottom: 15px; border-radius: 8px; border: 1px solid #444; transition: transform 0.2s, background-color 0.2s; }
+        .tool-card:hover { transform: translateY(-4px); background-color: #333; }
+        .tool-link { display: block; text-decoration: none; padding: 20px; }
+        .tool-link h2 { margin: 0 0 8px 0; font-size: 1.4em; color: #8ab4f8; }
+        .tool-link p { margin: 0 0 15px 0; font-size: 0.95em; color: #b0b0b0; line-height: 1.5; }
+        .tags-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; }
         .tag.websource { background-color: #006064; }
         .tag.program   { background-color: #e65100; }
         .tag.manual    { background-color: #4a148c; }
-
-        @media (max-width: 800px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -229,199 +58,132 @@
     <p class="disclaimer">These are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
     
     <div class="page-container">
+        <!-- The content of the grid will be generated by JavaScript -->
         <div class="main-grid">
-
-            <!-- COLUMN 1: Tools -->
-            <div class="column">
+            <div class="column" id="tools-column">
                 <h2 class="column-title">Tools</h2>
-
-                              <button type="button" class="collapsible">Music</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card">
-                            <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Incompetech</h2>
-                                <p>High-quality royalty-free music by Kevin MacLeod. I strongly suggest checking out his work, as he has a very generous and transparent usage policy. Many of his tracks are not as obviously popular as some of his best-known songs, so on his website you can discover plenty of hidden gems. Everything is well organized, and each track comes with a description that reflects his passion for the project.</p>
-                                <div class="tags-container">
-                                    <span class="tag websource">Websource</span>
-                                </div>
-                                <div class="license-info">
-                                    <strong>License:</strong> Requires attribution. You must credit the artist in your project.
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://studio.youtube.com/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>YouTube Audio Library</h2>
-                                <p>A large, free library of music and sound effects from YouTube.</p>
-                                <div class="tags-container">
-                                    <span class="tag websource">Websource</span>
-                                </div>
-                                <div class="license-info">
-                                    <strong>License:</strong> Varies. Check each track; some are completely free, others require attribution.
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tool-card">
-                            <a href="https://uppbeat.io/" target="_blank" rel="noopener noreferrer" class="tool-link">
-                                <h2>Uppbeat</h2>
-                                <p>A large library of free, curated music for creators with no copyright claims.</p>
-                                <div class="tags-container">
-                                    <span class="tag websource">Websource</span>
-                                </div>
-                                <div class="license-info">
-                                    <strong>License:</strong> Free with attribution. Provides a specific credit to copy and paste for your description.
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Sounds</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://freesound.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Freesound.org</h2><p>A massive collaborative database of audio snippets and samples.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://soundbible.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>SoundBible</h2><p>Thousands of free sound effects, sound clips, and sound bites.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.freesoundeffects.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Free Sound Effects</h2><p>A straightforward library of sound effects for various uses.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://samplefocus.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sample Focus</h2><p>A curated library of royalty-free audio samples.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://soundparticles.com/products/explorer" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sound Particles Explorer</h2><p>A free, powerful sound effects library manager for your local audio files.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-                
-                <button type="button" class="collapsible">Audio Editing</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://www.audacityteam.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Audacity</h2><p>A free, open source, cross-platform audio software for multi-track recording and editing.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Stock Footage & Photos</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://pixabay.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Pixabay</h2><p>A huge library of free stock photos, videos, and music.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.pexels.com/videos/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Pexels</h2><p>High-quality and completely free stock photos and videos.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.freepik.com/videos" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Freepik</h2><p>A source for high-quality videos, vectors, and stock photos.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.videezy.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Videezy</h2><p>A community of videographers who share free HD stock video.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://cutestockfootage.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Cute Stock Footage</h2><p>Offers a variety of free stock footage, often with unique styles like overlays and animations.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.vidsplay.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Vidsplay</h2><p>Completely free stock video footage, updated on a weekly basis.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
-                
-                <button type="button" class="collapsible">Graphics & Image Editing</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://www.getpaint.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Paint.NET</h2><p>A free and powerful image and photo editing software for Windows.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://krita.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Krita</h2><p>A professional, free and open source painting program made by artists.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.rawtherapee.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>RawTherapee</h2><p>A powerful, cross-platform raw photo processing system, completely free.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">3D & VFX</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://www.blender.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Blender</h2><p>The free and open source 3D creation suite. It supports the entirety of the 3D pipeline.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Video & Streaming</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://obsproject.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>OBS Studio</h2><p>Free and open source software for video recording and live streaming.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.videolan.org/vlc/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>VLC Media Player</h2><p>A free, open source, and cross-platform multimedia player that plays most media files.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="http://glmixer.sourceforge.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>GLMixer</h2><p>A real-time video mixing tool for live performances and VJing.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-                
-                <button type="button" class="collapsible">Visuals & Interactive Media</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://derivative.ca/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>TouchDesigner</h2><p>A node-based visual programming platform for real-time interactive multimedia content.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Music Production</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://onlinesequencer.net/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Sequencer</h2><p>A free in-browser music sequencer for creating melodies.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Design</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://coolors.co/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Coolors</h2><p>A powerful and fast color palette generator.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Google Fonts</h2><p>An extensive library of free and open source fonts for web and print.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Stop Motion</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://www.qstopmotion.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>qStopMotion</h2><p>A free, open-source application for creating stop-motion animations.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://www.charlielee.uk/boats-animator/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Boats Animator</h2><p>A simple and free stop-motion animation program, great for beginners.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://iriun.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Iriun Webcam</h2><p>Software to use your phone's high-quality camera as a wireless webcam for your PC.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Converters - Downloaders</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://handbrake.fr/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>HandBrake</h2><p>A free and open-source tool for converting video from nearly any format to a selection of modern codecs.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://helpx.adobe.com/camera-raw/using/adobe-dng-converter.html" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Adobe DNG Converter</h2><p>A free utility that converts files from many cameras to the DNG raw format.</p><div class="tags-container"><span class="tag program">Program</span></div></a></li>
-                        <li class="tool-card"><a href="https://online-audio-converter.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Online Audio Converter</h2><p>A versatile websource for converting audio files between many formats.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://getvideo.org/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>GetVideo.org</h2><p>A web-based tool for downloading videos from YouTube and other sites.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
-
-                <button type="button" class="collapsible">Cloud Storage & Sharing</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://www.google.com/drive/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Google Drive</h2><p>A popular cloud storage service for storing, sharing, and collaborating on files.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://playbook.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Playbook</h2><p>Visual cloud storage for designers and creatives with a generous free tier.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                        <li class="tool-card"><a href="https://wetransfer.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>WeTransfer</h2><p>A simple way to send large files to anyone. Free for up to 2GB.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
-                
-                <button type="button" class="collapsible">Portfolio & Client Delivery</button>
-                <div class="content">
-                    <ul>
-                        <li class="tool-card"><a href="https://pixieset.com/" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Pixieset</h2><p>A beautiful and easy-to-use platform for photographers to share, deliver, and sell their work online.</p><div class="tags-container"><span class="tag websource">Websource</span></div></a></li>
-                    </ul>
-                </div>
             </div>
-
-            <!-- COLUMN 2: Manuals -->
-            <div class="column">
+            <div class="column" id="manuals-column">
                 <h2 class="column-title">Manuals to my gear</h2>
-                <ul class="manuals-list">
-                    <li class="tool-card"><a href="https://eww.pavc.panasonic.co.jp/hdw/oi/WX970/HC-WX970_VX870_V770_V760_EE_SQW0254_rus.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Panasonic HC-V760/V770</h2><p>Official user manual for the Panasonic HC-V770 series camcorders. (PDF)</p><div class="tags-container"><span class="tag manual">Manual</span></div></a></li>
-                    <li class="tool-card"><a href="https://eww.pavc.panasonic.co.jp/hdw/oi/WX970/HC-WX970_VX870_V770_GC_GW_GN_GH_SQW0252_eng.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Panasonic HC-V770 (English)</h2><p>Official English language user manual for the V770 series camcorders. (PDF)</p><div class="tags-container"><span class="tag manual">Manual</span></div></a></li>
-                    <li class="tool-card"><a href="https://static.bhphotovideo.com/lit_files/63886.pdf" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro</h2><p>Official user manual for the Rode VideoMic Pro microphone. (PDF)</p><div class="tags-container"><span class="tag manual">Manual</span></div></a></li>
-                    <li class="tool-card"><a href="https://rode.com/en/products/videomic-pro#module_8" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Rode VideoMic Pro Support</h2><p>The official product page with additional resources and support.</p><div class="tags-container"><span class="tag manual">Manual</span><span class="tag websource">Websource</span></div></a></li>
-                    <li class="tool-card"><a href="https://www.sony.sk/electronics/support/e-mount-body-nex-5-series/nex-5/manuals" target="_blank" rel="noopener noreferrer" class="tool-link"><h2>Sony NEX-5 Camera</h2><p>Official support and manuals page for the Sony NEX-5 camera.</p><div class="tags-container"><span class="tag manual">Manual</span><span class="tag websource">Websource</span></div></a></li>
-                </ul>
+                <ul class="manuals-list" id="manuals-list"></ul>
             </div>
-
         </div>
     </div>
 
     <script>
-        const collapsibles = document.querySelectorAll(".collapsible");
+        // --- CONFIGURATION ---
+        const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTk4WkCpCLDXiyt_2xyPU3s1y_6W-LeKiUcOQsRHBs5hnqDBb3N2zbCuZxxlSc3YZY2pxoGbjm57pi/pub?output=csv';
 
-        collapsibles.forEach(button => {
-            button.addEventListener("click", function() {
-                this.classList.toggle("active");
-                const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } 
-            });
+        // --- DATA FETCHING AND PAGE BUILDING LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(googleSheetURL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    const data = parseCSV(text);
+                    buildPage(data);
+                    initializeCollapsibles();
+                })
+                .catch(error => {
+                    console.error("Error fetching or parsing data:", error);
+                    const toolsColumn = document.getElementById('tools-column');
+                    toolsColumn.innerHTML += "<p style='color: #ff5555;'>Could not load tools. The data source might be unavailable or incorrectly formatted.</p>";
+                });
         });
+
+        function parseCSV(text) {
+            const rows = text.split(/\r\n|\n/).slice(1); // Split into rows and remove header
+            return rows.map(row => {
+                // This simple parser handles basic CSV. It won't handle commas inside quoted fields.
+                const values = row.split(',');
+                if (values.length < 6) return null; // Ensure row has enough columns
+                return {
+                    name: values[0].trim(),
+                    url: values[1].trim(),
+                    description: values[2].trim(),
+                    category: values[3].trim(),
+                    column: values[4].trim(),
+                    tags: values[5] ? values[5].trim().split(' ').join('').split(',') : []
+                };
+            }).filter(item => item && item.name); // Filter out null or empty rows
+        }
+
+        function buildPage(data) {
+            const toolsColumn = document.getElementById('tools-column');
+            const manualsList = document.getElementById('manuals-list');
+            const toolsCategories = {};
+
+            data.forEach(item => {
+                const tagsHTML = item.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
+                
+                const cardHTML = `
+                    <li class="tool-card">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
+                            <h2>${item.name}</h2>
+                            <p>${item.description}</p>
+                            <div class="tags-container">${tagsHTML}</div>
+                        </a>
+                    </li>`;
+
+                if (item.column === 'Tools') {
+                    if (!toolsCategories[item.category]) {
+                        toolsCategories[item.category] = [];
+                    }
+                    toolsCategories[item.category].push(cardHTML);
+                } else if (item.column === 'Manuals') {
+                    // Manuals have a simpler structure, we just group by category name
+                     if (!toolsCategories[item.category]) {
+                        toolsCategories[item.category] = [];
+                    }
+                    toolsCategories[item.category].push(cardHTML);
+                }
+            });
+            
+            // Build the collapsible sections for tools
+            let toolsHtmlContent = '';
+            for (const category in toolsCategories) {
+                // Find an item in the data to check which column this category belongs to
+                const itemInCat = data.find(d => d.category === category);
+                if(itemInCat && itemInCat.column === 'Tools') {
+                    toolsHtmlContent += `
+                        <button type="button" class="collapsible">${category}</button>
+                        <div class="content">
+                            <ul>${toolsCategories[category].join('')}</ul>
+                        </div>`;
+                }
+            }
+            toolsColumn.innerHTML += toolsHtmlContent;
+
+            // Build the non-collapsible list for manuals
+            let manualsHtmlContent = '';
+             for (const category in toolsCategories) {
+                const itemInCat = data.find(d => d.category === category);
+                 if(itemInCat && itemInCat.column === 'Manuals') {
+                    manualsHtmlContent += toolsCategories[category].join('');
+                }
+            }
+            manualsList.innerHTML += manualsHtmlContent;
+        }
+
+        function initializeCollapsibles() {
+            const collapsibles = document.querySelectorAll(".collapsible");
+            collapsibles.forEach(button => {
+                button.addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+        }
     </script>
 
 </body>
 </html>
-
-

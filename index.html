@@ -12,39 +12,39 @@
     <style>
         /* --- Base Dark Theme Styling --- */
         body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
-
-        /* --- Fluid Title Container Styling --- */
         .title-container { display: flex; align-items: center; justify-content: center; width: 95%; gap: clamp(10px, 2.5vw, 20px); margin-bottom: 15px; }
         .logo-img { height: clamp(40px, 6vw, 60px); width: auto; flex-shrink: 0; }
         h1 { color: #64b5f6; text-align: center; margin: 0; font-size: clamp(1.5em, 5vw, 2.5em); line-height: 1.2; }
-
-        /* --- Navigation Menu Styling --- */
-        nav { width: 100%; max-width: 1200px; text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        nav { width: 100%; max-width: 1200px; text-align: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 15px; }
         nav a { color: #b0b0b0; text-decoration: none; font-weight: bold; padding: 10px 15px; margin: 0 5px; border-radius: 6px; transition: background-color 0.2s, color 0.2s; }
         nav a:hover { background-color: #2a2a2a; color: #fff; }
         nav a.active { color: #fff; background-color: #007bff; }
 
-        /* --- NEW: Search Bar Styling --- */
-        .search-container {
-            width: 95%;
-            max-width: 1200px;
-            margin-bottom: 30px;
-        }
-        #search-bar {
+        /* --- NEW: Sorter Styling --- */
+        .sorter-container {
             width: 100%;
-            padding: 12px 15px;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #e0e0e0;
-            font-size: 1.1em;
-            box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            max-width: 1200px;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
         }
-        #search-bar:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        .sort-btn {
+            background: #333;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .sort-btn:hover {
+            background-color: #444;
+        }
+        .sort-btn.active {
+            background-color: #007bff;
+            color: #fff;
         }
 
         .disclaimer { text-align: center; font-style: italic; color: #aaa; max-width: 700px; margin-bottom: 30px; line-height: 1.6; }
@@ -83,9 +83,10 @@
         <a href="workflows.html">Workflows</a>
     </nav>
 
-    <!-- NEW: Search Bar HTML -->
-    <div class="search-container">
-        <input type="text" id="search-bar" placeholder="Search for tools or manuals...">
+    <!-- NEW: Sorter HTML -->
+    <div class="sorter-container">
+        <button id="sort-az-btn" class="sort-btn">Sort Programs (A-Z)</button>
+        <button id="reset-sort-btn" class="sort-btn">Reset Sort</button>
     </div>
 
     <p class="disclaimer">These are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
@@ -103,29 +104,24 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTk4WkCpCLDXiyt_2xyPU3s1y_6W-LeKiUcOQsRHBs5hnqDBb3N2zbCuZxxlSc3YZY2pxoGbjm57pi/pub?output=csv';
+        let originalData = []; // <-- NEW: To store the original order
 
         document.addEventListener('DOMContentLoaded', () => {
             fetch(googleSheetURL)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
+                .then(response => response.ok ? response.text() : Promise.reject('Network response was not ok'))
                 .then(text => {
-                    const data = parseCSV(text);
-                    buildPage(data);
-                    // Initialize features after the page is built
-                    initializeCollapsibles();
-                    initializeSearch(); // <-- NEW
+                    originalData = parseCSV(text); // <-- Store original data
+                    rebuildPage(originalData); // <-- Build the initial page
                 })
                 .catch(error => {
                     console.error("Error fetching or parsing data:", error);
                     const toolsColumn = document.getElementById('tools-column');
-                    toolsColumn.innerHTML += "<p style='color: #ff5555;'>Could not load tools. The data source might be unavailable or incorrectly formatted.</p>";
+                    toolsColumn.innerHTML += "<p style='color: #ff5555;'>Could not load tools.</p>";
                 });
         });
 
+        // The CSV parser is unchanged
         function parseCSV(text) {
             const lines = text.split(/\r\n|\n/);
             const headers = lines[0].split(',');
@@ -135,32 +131,42 @@
                 const obj = {};
                 const values = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
                 if (values.length !== headers.length) continue;
-                
                 for (let j = 0; j < headers.length; j++) {
                     let value = values[j] || '';
                     if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1);
                     value = value.replace(/""/g, '"');
-                    
                     const header = headers[j].trim().toLowerCase();
-                    if (header === 'tags') {
-                        obj[header] = value ? value.trim().split(' ').join('').split(',') : [];
-                    } else {
-                        obj[header] = value.trim();
-                    }
+                    if (header === 'tags') obj[header] = value ? value.trim().split(' ').join('').split(',') : [];
+                    else obj[header] = value.trim();
                 }
                 result.push(obj);
             }
             return result;
         }
 
+        // --- NEW: Rebuild function to clear and build the page from any dataset ---
+        function rebuildPage(data) {
+            clearContent();
+            buildPage(data);
+            initializeCollapsibles();
+            initializeSorters(); // Initialize sorters after page is built
+        }
+
+        function clearContent() {
+            const toolsColumn = document.getElementById('tools-column');
+            toolsColumn.innerHTML = '<h2 class="column-title">Tools</h2>'; // Keep the title
+            const manualsList = document.getElementById('manuals-list');
+            manualsList.innerHTML = '';
+        }
+
+        // The buildPage function is unchanged
         function buildPage(data) {
-            // This function is unchanged
+            // ... (The buildPage function from your previous code is exactly the same)
             const toolsColumn = document.getElementById('tools-column');
             const manualsList = document.getElementById('manuals-list');
             const toolsCategories = {};
             const tools = data.filter(item => item.column === 'Tools');
             const manuals = data.filter(item => item.column === 'Manuals');
-
             tools.forEach(tool => {
                 if (!toolsCategories[tool.category]) toolsCategories[tool.category] = [];
                 const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
@@ -168,7 +174,6 @@
                     <li class="tool-card"><a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
                         <h2>${tool.name}</h2><p>${tool.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`);
             });
-
             let toolsHtmlContent = '';
             for (const category in toolsCategories) {
                 toolsHtmlContent += `
@@ -176,7 +181,6 @@
                     <div class="content"><ul>${toolsCategories[category].join('')}</ul></div>`;
             }
             toolsColumn.innerHTML += toolsHtmlContent;
-
             let manualsHtmlContent = '';
             manuals.forEach(manual => {
                 const tagsHTML = manual.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
@@ -187,37 +191,33 @@
             manualsList.innerHTML = manualsHtmlContent;
         }
 
-        // --- NEW: SEARCH FUNCTIONALITY ---
-        function initializeSearch() {
-            const searchBar = document.getElementById('search-bar');
-            
-            searchBar.addEventListener('input', () => {
-                const query = searchBar.value.toLowerCase().trim();
-                
-                // Filter all tool cards first
-                document.querySelectorAll('.tool-card').forEach(card => {
-                    const cardText = card.textContent.toLowerCase();
-                    const isVisible = cardText.includes(query);
-                    card.style.display = isVisible ? '' : 'none';
-                });
+        // --- NEW: Sorting Functionality ---
+        function initializeSorters() {
+            const sortBtn = document.getElementById('sort-az-btn');
+            const resetBtn = document.getElementById('reset-sort-btn');
 
-                // Then, check which categories in the 'Tools' column are now empty
-                document.querySelectorAll('#tools-column .collapsible').forEach(button => {
-                    const content = button.nextElementSibling;
-                    // Find all cards inside this content div that are NOT hidden
-                    const visibleCards = content.querySelectorAll('.tool-card:not([style*="display: none"])');
-                    
-                    if (visibleCards.length > 0) {
-                        button.style.display = ''; // Show the category button
-                    } else {
-                        button.style.display = 'none'; // Hide the category button
-                    }
-                });
+            sortBtn.addEventListener('click', () => {
+                const programs = originalData.filter(item => item.tags.includes('Program'));
+                const others = originalData.filter(item => !item.tags.includes('Program'));
+                
+                programs.sort((a, b) => a.name.localeCompare(b.name));
+                
+                const sortedData = [...programs, ...others];
+                rebuildPage(sortedData);
+                
+                sortBtn.classList.add('active');
+                resetBtn.classList.remove('active');
+            });
+
+            resetBtn.addEventListener('click', () => {
+                rebuildPage(originalData);
+                resetBtn.classList.add('active');
+                sortBtn.classList.remove('active');
             });
         }
 
+        // The initializeCollapsibles function is unchanged
         function initializeCollapsibles() {
-            // This function is unchanged
             const collapsibles = document.querySelectorAll(".collapsible");
             collapsibles.forEach(button => {
                 button.addEventListener("click", function() {

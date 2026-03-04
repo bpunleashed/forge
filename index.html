@@ -20,7 +20,7 @@
         nav a:hover { background-color: #2a2a2a; color: #fff; }
         nav a.active { color: #fff; background-color: #007bff; }
 
-        /* --- Filter/Search Container Styling --- */
+        /* --- Controls Container Styling --- */
         .controls-container {
             width: 95%;
             max-width: 1200px;
@@ -28,34 +28,16 @@
             flex-wrap: wrap;
             gap: 15px;
             margin-bottom: 30px;
-            justify-content: center;
         }
         #search-bar {
-            flex-grow: 1; /* Allows it to take up available space */
-            min-width: 250px;
-            padding: 10px 15px;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #e0e0e0;
-            font-size: 1.1em;
-            box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            flex-grow: 1; min-width: 250px; padding: 10px 15px; background-color: #1e1e1e;
+            border: 1px solid #333; border-radius: 8px; color: #e0e0e0; font-size: 1.1em;
+            box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s;
         }
-        #search-bar:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-        }
+        #search-bar:focus { outline: none; border-color: #007bff; box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); }
         .filter-btn {
-            background: #333;
-            border: 1px solid #555;
-            color: #e0e0e0;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
+            background: #333; border: 1px solid #555; color: #e0e0e0; padding: 10px 15px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; transition: background-color 0.2s;
         }
         .filter-btn:hover { background-color: #444; }
         .filter-btn.active { background-color: #007bff; color: #fff; }
@@ -69,7 +51,7 @@
         .collapsible::after { content: '+'; font-size: 1.5em; color: #aaa; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); transition: transform 0.3s ease; }
         .collapsible.active::after { content: "−"; transform: translateY(-50%) rotate(180deg); }
         .content { padding: 0 18px; max-height: 0; overflow: hidden; background-color: transparent; transition: max-height 0.3s ease-out; }
-        .content ul, .manuals-list { list-style-type: none; padding: 15px 0 0 0; margin: 0; }
+        .content ul, .manuals-list, .software-list { list-style-type: none; padding: 15px 0 0 0; margin: 0; }
         .tool-card { background-color: #252525; margin-bottom: 15px; border-radius: 8px; border: 1px solid #444; transition: transform 0.2s, background-color 0.2s; }
         .tool-card:hover { transform: translateY(-4px); background-color: #333; }
         .tool-link { display: block; text-decoration: none; padding: 20px; }
@@ -80,7 +62,11 @@
         .tag.websource { background-color: #006064; }
         .tag.program   { background-color: #e65100; }
         .tag.manual    { background-color: #4a148c; }
-        @media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } }
+        
+        @media (max-width: 800px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .controls-container { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -105,7 +91,7 @@
     <p class="disclaimer">These are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
     
     <div class="page-container">
-        <div class="main-grid">
+        <div class="main-grid" id="main-grid">
             <div class="column" id="tools-column">
                 <h2 class="column-title">Tools</h2>
             </div>
@@ -125,13 +111,13 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Network error'))
                 .then(text => {
                     allData = parseCSV(text);
-                    rebuildPage(allData); // Initial build
+                    applyFiltersAndRender(); // Initial build
                     initializeControls();
                 })
                 .catch(error => console.error("Error:", error));
         });
 
-        function parseCSV(text) {
+        function parseCSV(text) { /* Unchanged from previous version */
             const lines = text.split(/\r\n|\n/).slice(1);
             return lines.map(line => {
                 if (!line) return null;
@@ -148,42 +134,42 @@
             }).filter(Boolean);
         }
 
-        function rebuildPage(data) {
-            clearContent();
-            buildPage(data);
-            initializeCollapsibles();
-        }
-
         function clearContent() {
             document.getElementById('tools-column').innerHTML = '<h2 class="column-title">Tools</h2>';
             document.getElementById('manuals-list').innerHTML = '';
         }
 
-        function buildPage(data, isSoftwareOnlyMode = false) {
+        function buildPage(data, isSoftwareOnlyMode) {
+            clearContent();
             const toolsColumn = document.getElementById('tools-column');
-            const manualsList = document.getElementById('manuals-list');
-            
-            const tools = data.filter(item => item.column === 'Tools');
-            const manuals = data.filter(item => item.column === 'Manuals');
+            const manualsColumn = document.getElementById('manuals-column');
+            const mainGrid = document.getElementById('main-grid');
 
             if (isSoftwareOnlyMode) {
                 // --- SOFTWARE ONLY MODE ---
-                const programs = tools.filter(item => item.tags.includes('Program'))
-                                      .sort((a, b) => a.name.localeCompare(b.name));
-                
-                let softwareHtml = '<ul>';
-                programs.forEach(tool => {
+                mainGrid.style.gridTemplateColumns = '1fr'; // Use a single column layout
+                manualsColumn.style.display = 'none';
+                toolsColumn.querySelector('.column-title').textContent = 'All Software (A-Z)';
+
+                let softwareHtml = '<ul class="software-list">';
+                data.forEach(tool => {
                     const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
                     softwareHtml += `<li class="tool-card"><a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
                         <h2>${tool.name}</h2><p>${tool.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`;
                 });
                 softwareHtml += '</ul>';
                 toolsColumn.innerHTML += softwareHtml;
-                document.getElementById('manuals-column').style.display = 'none'; // Hide manuals column
             
             } else {
                 // --- NORMAL (ALL) MODE ---
+                mainGrid.style.gridTemplateColumns = ''; // Revert to CSS default (2 columns)
+                manualsColumn.style.display = '';
+                toolsColumn.querySelector('.column-title').textContent = 'Tools';
+
+                const tools = data.filter(item => item.column === 'Tools');
+                const manuals = data.filter(item => item.column === 'Manuals');
                 const toolsCategories = {};
+                
                 tools.forEach(tool => {
                     if (!toolsCategories[tool.category]) toolsCategories[tool.category] = [];
                     const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
@@ -204,9 +190,33 @@
                     manualsHtmlContent += `<li class="tool-card"><a href="${manual.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
                         <h2>${manual.name}</h2><p>${manual.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`;
                 });
-                manualsList.innerHTML = manualsHtmlContent;
-                document.getElementById('manuals-column').style.display = ''; // Show manuals column
+                document.getElementById('manuals-list').innerHTML = manualsHtmlContent;
+                initializeCollapsibles();
             }
+        }
+        
+        // --- NEW: Central Controller Function ---
+        let isSoftwareMode = false;
+        function applyFiltersAndRender() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            let filteredData = allData;
+
+            if (isSoftwareMode) {
+                filteredData = allData.filter(item => item.tags.includes('Program'));
+            }
+
+            if (query) {
+                filteredData = filteredData.filter(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.description.toLowerCase().includes(query)
+                );
+            }
+            
+            if (isSoftwareMode) {
+                filteredData.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            
+            buildPage(filteredData, isSoftwareMode);
         }
 
         function initializeControls() {
@@ -214,42 +224,20 @@
             const allBtn = document.getElementById('filter-all-btn');
             const softwareBtn = document.getElementById('filter-software-btn');
             
-            let isSoftwareMode = false;
-
-            function applyFilters() {
-                const query = searchBar.value.toLowerCase().trim();
-                let filteredData = allData;
-
-                // 1. Filter by mode (all vs. software)
-                if (isSoftwareMode) {
-                    filteredData = allData.filter(item => item.tags.includes('Program'));
-                }
-
-                // 2. Filter by search query
-                if (query) {
-                    filteredData = filteredData.filter(item => 
-                        item.name.toLowerCase().includes(query) || 
-                        item.description.toLowerCase().includes(query)
-                    );
-                }
-                
-                rebuildPage(filteredData, isSoftwareMode);
-            }
-
-            searchBar.addEventListener('input', applyFilters);
+            searchBar.addEventListener('input', applyFiltersAndRender);
             
             allBtn.addEventListener('click', () => {
                 isSoftwareMode = false;
                 allBtn.classList.add('active');
                 softwareBtn.classList.remove('active');
-                applyFilters();
+                applyFiltersAndRender();
             });
 
             softwareBtn.addEventListener('click', () => {
                 isSoftwareMode = true;
                 softwareBtn.classList.add('active');
                 allBtn.classList.remove('active');
-                applyFilters();
+                applyFiltersAndRender();
             });
         }
 

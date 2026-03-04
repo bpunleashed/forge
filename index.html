@@ -20,32 +20,45 @@
         nav a:hover { background-color: #2a2a2a; color: #fff; }
         nav a.active { color: #fff; background-color: #007bff; }
 
-        /* --- NEW: Sorter Styling --- */
-        .sorter-container {
-            width: 100%;
+        /* --- Filter/Search Container Styling --- */
+        .controls-container {
+            width: 95%;
             max-width: 1200px;
-            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             margin-bottom: 30px;
-            padding-bottom: 15px;
+            justify-content: center;
         }
-        .sort-btn {
+        #search-bar {
+            flex-grow: 1; /* Allows it to take up available space */
+            min-width: 250px;
+            padding: 10px 15px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #search-bar:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+        .filter-btn {
             background: #333;
             border: 1px solid #555;
             color: #e0e0e0;
-            padding: 8px 15px;
-            margin: 0 5px;
+            padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.2s;
         }
-        .sort-btn:hover {
-            background-color: #444;
-        }
-        .sort-btn.active {
-            background-color: #007bff;
-            color: #fff;
-        }
+        .filter-btn:hover { background-color: #444; }
+        .filter-btn.active { background-color: #007bff; color: #fff; }
 
         .disclaimer { text-align: center; font-style: italic; color: #aaa; max-width: 700px; margin-bottom: 30px; line-height: 1.6; }
         .page-container { width: 95%; max-width: 1200px; }
@@ -83,10 +96,10 @@
         <a href="workflows.html">Workflows</a>
     </nav>
 
-    <!-- NEW: Sorter HTML -->
-    <div class="sorter-container">
-        <button id="sort-az-btn" class="sort-btn">Sort Programs (A-Z)</button>
-        <button id="reset-sort-btn" class="sort-btn">Reset Sort</button>
+    <div class="controls-container">
+        <input type="text" id="search-bar" placeholder="Search for anything...">
+        <button id="filter-all-btn" class="filter-btn active">Show All</button>
+        <button id="filter-software-btn" class="filter-btn">Show Software Only</button>
     </div>
 
     <p class="disclaimer">These are tools I work with. If you are here, you can take advantage of that and also use them. Most of them are full free or free with resetting time limit. Enjoy.</p>
@@ -105,121 +118,143 @@
 
     <script>
         const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTk4WkCpCLDXiyt_2xyPU3s1y_6W-LeKiUcOQsRHBs5hnqDBb3N2zbCuZxxlSc3YZY2pxoGbjm57pi/pub?output=csv';
-        let originalData = []; // <-- NEW: To store the original order
+        let allData = []; // Store the original full dataset
 
         document.addEventListener('DOMContentLoaded', () => {
             fetch(googleSheetURL)
-                .then(response => response.ok ? response.text() : Promise.reject('Network response was not ok'))
+                .then(response => response.ok ? response.text() : Promise.reject('Network error'))
                 .then(text => {
-                    originalData = parseCSV(text); // <-- Store original data
-                    rebuildPage(originalData); // <-- Build the initial page
+                    allData = parseCSV(text);
+                    rebuildPage(allData); // Initial build
+                    initializeControls();
                 })
-                .catch(error => {
-                    console.error("Error fetching or parsing data:", error);
-                    const toolsColumn = document.getElementById('tools-column');
-                    toolsColumn.innerHTML += "<p style='color: #ff5555;'>Could not load tools.</p>";
-                });
+                .catch(error => console.error("Error:", error));
         });
 
-        // The CSV parser is unchanged
         function parseCSV(text) {
-            const lines = text.split(/\r\n|\n/);
-            const headers = lines[0].split(',');
-            const result = [];
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i]) continue;
+            const lines = text.split(/\r\n|\n/).slice(1);
+            return lines.map(line => {
+                if (!line) return null;
+                const values = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
+                if (values.length < 6) return null;
                 const obj = {};
-                const values = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                if (values.length !== headers.length) continue;
-                for (let j = 0; j < headers.length; j++) {
-                    let value = values[j] || '';
-                    if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1);
-                    value = value.replace(/""/g, '"');
-                    const header = headers[j].trim().toLowerCase();
-                    if (header === 'tags') obj[header] = value ? value.trim().split(' ').join('').split(',') : [];
-                    else obj[header] = value.trim();
-                }
-                result.push(obj);
-            }
-            return result;
+                ['name', 'url', 'description', 'category', 'column', 'tags'].forEach((header, i) => {
+                    let value = values[i] || '';
+                    if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1).replace(/""/g, '"');
+                    obj[header] = value.trim();
+                });
+                obj.tags = obj.tags ? obj.tags.split(',').map(t => t.trim()) : [];
+                return obj;
+            }).filter(Boolean);
         }
 
-        // --- NEW: Rebuild function to clear and build the page from any dataset ---
         function rebuildPage(data) {
             clearContent();
             buildPage(data);
             initializeCollapsibles();
-            initializeSorters(); // Initialize sorters after page is built
         }
 
         function clearContent() {
-            const toolsColumn = document.getElementById('tools-column');
-            toolsColumn.innerHTML = '<h2 class="column-title">Tools</h2>'; // Keep the title
-            const manualsList = document.getElementById('manuals-list');
-            manualsList.innerHTML = '';
+            document.getElementById('tools-column').innerHTML = '<h2 class="column-title">Tools</h2>';
+            document.getElementById('manuals-list').innerHTML = '';
         }
 
-        // The buildPage function is unchanged
-        function buildPage(data) {
-            // ... (The buildPage function from your previous code is exactly the same)
+        function buildPage(data, isSoftwareOnlyMode = false) {
             const toolsColumn = document.getElementById('tools-column');
             const manualsList = document.getElementById('manuals-list');
-            const toolsCategories = {};
+            
             const tools = data.filter(item => item.column === 'Tools');
             const manuals = data.filter(item => item.column === 'Manuals');
-            tools.forEach(tool => {
-                if (!toolsCategories[tool.category]) toolsCategories[tool.category] = [];
-                const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
-                toolsCategories[tool.category].push(`
-                    <li class="tool-card"><a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
+
+            if (isSoftwareOnlyMode) {
+                // --- SOFTWARE ONLY MODE ---
+                const programs = tools.filter(item => item.tags.includes('Program'))
+                                      .sort((a, b) => a.name.localeCompare(b.name));
+                
+                let softwareHtml = '<ul>';
+                programs.forEach(tool => {
+                    const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
+                    softwareHtml += `<li class="tool-card"><a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
+                        <h2>${tool.name}</h2><p>${tool.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`;
+                });
+                softwareHtml += '</ul>';
+                toolsColumn.innerHTML += softwareHtml;
+                document.getElementById('manuals-column').style.display = 'none'; // Hide manuals column
+            
+            } else {
+                // --- NORMAL (ALL) MODE ---
+                const toolsCategories = {};
+                tools.forEach(tool => {
+                    if (!toolsCategories[tool.category]) toolsCategories[tool.category] = [];
+                    const tagsHTML = tool.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
+                    toolsCategories[tool.category].push(`<li class="tool-card"><a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
                         <h2>${tool.name}</h2><p>${tool.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`);
-            });
-            let toolsHtmlContent = '';
-            for (const category in toolsCategories) {
-                toolsHtmlContent += `
-                    <button type="button" class="collapsible">${category}</button>
-                    <div class="content"><ul>${toolsCategories[category].join('')}</ul></div>`;
-            }
-            toolsColumn.innerHTML += toolsHtmlContent;
-            let manualsHtmlContent = '';
-            manuals.forEach(manual => {
-                const tagsHTML = manual.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
-                manualsHtmlContent += `
-                    <li class="tool-card"><a href="${manual.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
+                });
+
+                let toolsHtmlContent = '';
+                for (const category in toolsCategories) {
+                    toolsHtmlContent += `<button type="button" class="collapsible">${category}</button>
+                                         <div class="content"><ul>${toolsCategories[category].join('')}</ul></div>`;
+                }
+                toolsColumn.innerHTML += toolsHtmlContent;
+
+                let manualsHtmlContent = '';
+                manuals.forEach(manual => {
+                    const tagsHTML = manual.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
+                    manualsHtmlContent += `<li class="tool-card"><a href="${manual.url}" target="_blank" rel="noopener noreferrer" class="tool-link">
                         <h2>${manual.name}</h2><p>${manual.description}</p><div class="tags-container">${tagsHTML}</div></a></li>`;
-            });
-            manualsList.innerHTML = manualsHtmlContent;
+                });
+                manualsList.innerHTML = manualsHtmlContent;
+                document.getElementById('manuals-column').style.display = ''; // Show manuals column
+            }
         }
 
-        // --- NEW: Sorting Functionality ---
-        function initializeSorters() {
-            const sortBtn = document.getElementById('sort-az-btn');
-            const resetBtn = document.getElementById('reset-sort-btn');
+        function initializeControls() {
+            const searchBar = document.getElementById('search-bar');
+            const allBtn = document.getElementById('filter-all-btn');
+            const softwareBtn = document.getElementById('filter-software-btn');
+            
+            let isSoftwareMode = false;
 
-            sortBtn.addEventListener('click', () => {
-                const programs = originalData.filter(item => item.tags.includes('Program'));
-                const others = originalData.filter(item => !item.tags.includes('Program'));
+            function applyFilters() {
+                const query = searchBar.value.toLowerCase().trim();
+                let filteredData = allData;
+
+                // 1. Filter by mode (all vs. software)
+                if (isSoftwareMode) {
+                    filteredData = allData.filter(item => item.tags.includes('Program'));
+                }
+
+                // 2. Filter by search query
+                if (query) {
+                    filteredData = filteredData.filter(item => 
+                        item.name.toLowerCase().includes(query) || 
+                        item.description.toLowerCase().includes(query)
+                    );
+                }
                 
-                programs.sort((a, b) => a.name.localeCompare(b.name));
-                
-                const sortedData = [...programs, ...others];
-                rebuildPage(sortedData);
-                
-                sortBtn.classList.add('active');
-                resetBtn.classList.remove('active');
+                rebuildPage(filteredData, isSoftwareMode);
+            }
+
+            searchBar.addEventListener('input', applyFilters);
+            
+            allBtn.addEventListener('click', () => {
+                isSoftwareMode = false;
+                allBtn.classList.add('active');
+                softwareBtn.classList.remove('active');
+                applyFilters();
             });
 
-            resetBtn.addEventListener('click', () => {
-                rebuildPage(originalData);
-                resetBtn.classList.add('active');
-                sortBtn.classList.remove('active');
+            softwareBtn.addEventListener('click', () => {
+                isSoftwareMode = true;
+                softwareBtn.classList.add('active');
+                allBtn.classList.remove('active');
+                applyFilters();
             });
         }
 
-        // The initializeCollapsibles function is unchanged
         function initializeCollapsibles() {
-            const collapsibles = document.querySelectorAll(".collapsible");
-            collapsibles.forEach(button => {
+            document.querySelectorAll(".collapsible").forEach(button => {
                 button.addEventListener("click", function() {
                     this.classList.toggle("active");
                     const content = this.nextElementSibling;
@@ -232,6 +267,5 @@
             });
         }
     </script>
-
 </body>
 </html>
